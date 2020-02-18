@@ -3,7 +3,7 @@ import java.util.concurrent.Semaphore;
 
 public class Downloader extends Thread {
     private int downloadspeed =500/100;
-   private int id;
+    private int id;
     private Semaphore sem;
     private CountDownLatch cdl;
 
@@ -16,21 +16,24 @@ public class Downloader extends Thread {
     public synchronized void run(){
         try{
             sem.acquire();
-         System.out.println(id + "start downloading");
-         sleep(downloadspeed*1000);
+            System.out.println(id + "start downloading");
+            sleep(downloadspeed*1000);
 
 
             System.out.println(id + "finish downloading");
-            sleep(downloadspeed*1000);
+
             sem.release();
+
             cdl.countDown();
 
 
 
 
 
-     } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-     }
+    }
 }
+
+

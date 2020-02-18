@@ -5,35 +5,32 @@ public class Main {
     public static final int Mb = 25;
     public static final int dl = 10;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Semaphore semaphore = new Semaphore(3,true);
         CountDownLatch cdl1 = new CountDownLatch(Mb);
         CountDownLatch cdl2 = new CountDownLatch(dl);
 
-        Uploader uploader = new Uploader(cdl1);
-        uploader.start();
-        try {
-            cdl1.await();
-            System.out.println("File downloaded");
-            System.out.println("_________________");
+        Thread thread = new Thread(new Uploader(cdl1));
+        thread.start();
+        thread.join();
+
+
+
+
+
 
             for (int i = 1; i <=dl ; i++) {
-                Downloader downloader =new Downloader(i, semaphore,cdl2);
-                downloader.start();
+                Thread thread1 = new Thread(new Downloader(i,semaphore,cdl2));
+                thread1.start();
 
             }
             cdl2.await();
-            System.out.println("File is deleted");
+        System.out.println("File is deleted");
 
 
 
 
 
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
     }
