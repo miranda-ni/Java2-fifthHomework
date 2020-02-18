@@ -2,10 +2,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 
 public class Downloader extends Thread {
-    int downloadspeed =500/100;
-    int id;
-    Semaphore sem;
-    CountDownLatch cdl;
+    private int downloadspeed =500/100;
+   private int id;
+    private Semaphore sem;
+    private CountDownLatch cdl;
 
     public Downloader(int id, Semaphore sem, CountDownLatch cdl) {
         this.id = id;
@@ -19,8 +19,10 @@ public class Downloader extends Thread {
          System.out.println(id + "start downloading");
          sleep(downloadspeed*1000);
 
+
             System.out.println(id + "finish downloading");
             sleep(downloadspeed*1000);
+            sem.release();
             cdl.countDown();
 
 

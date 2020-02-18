@@ -3,7 +3,9 @@ import java.util.concurrent.Semaphore;
 
 public class Uploader extends Thread {
 
-    CountDownLatch cdl;
+   private CountDownLatch cdl;
+
+
 
     public Uploader(CountDownLatch cdl) {
         this.cdl = cdl;
@@ -11,8 +13,9 @@ public class Uploader extends Thread {
     public synchronized void run(){
         try {
             for (int i = 1; i <=10 ; i++) {
-                System.out.println("File is loading" +i*10 + "%");
-                sleep(1000);
+                System.out.println(" File is loading " + i*10 + "%");
+                sleep(100);
+
                 cdl.countDown();
 
 
